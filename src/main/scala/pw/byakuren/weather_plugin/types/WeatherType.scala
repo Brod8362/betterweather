@@ -18,7 +18,7 @@ object WeatherType extends Enumeration {
     Biome.MODIFIED_BADLANDS_PLATEAU, Biome.MODIFIED_WOODED_BADLANDS_PLATEAU, Biome.WOODED_BADLANDS_PLATEAU)
 
   val SNOWY_BIOMES: Set[Biome] = Set(Biome.SNOWY_TUNDRA, Biome.ICE_SPIKES, Biome.SNOWY_TAIGA, Biome.SNOWY_TAIGA_HILLS, Biome.FROZEN_RIVER,
-    Biome.SNOWY_BEACH, Biome.SNOWY_TAIGA_MOUNTAINS)
+    Biome.SNOWY_BEACH, Biome.SNOWY_TAIGA_MOUNTAINS, Biome.SNOWY_MOUNTAINS)
 
   implicit def toWeatherString(t: Value, b: Biome): String = {
     t match {

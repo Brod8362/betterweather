@@ -4,16 +4,16 @@ import org.bukkit.block.Biome
 import org.bukkit.command.{Command, CommandExecutor, CommandSender}
 import org.bukkit.entity.Player
 import org.bukkit.ChatColor
+import org.bukkit.configuration.file.FileConfiguration
 import pw.byakuren.weather_plugin.WeatherGenerator
 import pw.byakuren.weather_plugin.types.WeatherType
 import pw.byakuren.weather_plugin.types.WeatherType._
 
-class ForecastCommand(seed: Long) extends CommandExecutor {
-
-
+class ForecastCommand(config: FileConfiguration) extends CommandExecutor {
 
   override def onCommand(sender: CommandSender, command: Command, label: String, args: Array[String]): Boolean = {
     //NOTE - show "rain" or "snow" depending on the user's biome when they execute the command. in desert, show "cloudy"
+    val seed = config.getLong("seed")
     sender match {
       case p: Player => {
         val pos = p.getLocation
@@ -61,7 +61,7 @@ class ForecastCommand(seed: Long) extends CommandExecutor {
   }
 
   def dayPreview(day: Long, b: Biome): String = {
-    val wt = WeatherGenerator.day(day, seed)
+    val wt = WeatherGenerator.day(day, config.getLong("seed"))
     s"${ChatColor.GOLD}Day ${ChatColor.RESET}$day ${ChatColor.GOLD}: " +
       s"${shortWeatherString(wt.morning, b)}${shortWeatherString(wt.afternoon, b)}"+
       s"${shortWeatherString(wt.evening,b)}${shortWeatherString(wt.after_midnight,b)}"

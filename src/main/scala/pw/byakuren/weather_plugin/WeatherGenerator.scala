@@ -51,6 +51,10 @@ object WeatherGenerator {
     }
   }
 
+  def clearCache: Unit = {
+    day_cache.clear()
+  }
+
 
 }
 
