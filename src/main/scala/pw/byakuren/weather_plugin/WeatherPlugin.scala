@@ -17,7 +17,7 @@ class WeatherPlugin extends JavaPlugin {
     Bukkit.getScheduler.scheduleSyncRepeatingTask(this, new BetterWeatherHandler(config.getLong("seed"), getWorlds), 40, 600)
 
     // register commands
-    this.getCommand("forecast").setExecutor(new ForecastCommand)
+    this.getCommand("forecast").setExecutor(new ForecastCommand(config.getLong("seed")))
     this.getCommand("weather_seed").setExecutor(new WeatherSeedCommand(config))
     this.getCommand("weather_control").setExecutor(new WeatherToggleCommand(weatherPluginControl))
     this.getCommand("curworld").setExecutor(new CurrentWorldCommand)
