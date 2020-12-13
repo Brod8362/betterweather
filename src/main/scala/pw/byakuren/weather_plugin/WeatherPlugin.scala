@@ -21,7 +21,7 @@ class WeatherPlugin extends JavaPlugin with Listener {
   }
 
   override def onEnable(): Unit = {
-    Bukkit.broadcastMessage("BetterWeather loaded")
+//    Bukkit.broadcastMessage("BetterWeather loaded")
     weatherPluginControl(true)
 
     // register commands
@@ -69,7 +69,7 @@ class WeatherPlugin extends JavaPlugin with Listener {
   @EventHandler
   def timeSkipEvent(tsE: TimeSkipEvent): Unit = {
     if (getWorlds.head.getFullTime-lastReschedule>20) {
-      Bukkit.broadcastMessage("timeskip, adjusting weather cycle")
+//      Bukkit.broadcastMessage("timeskip, adjusting weather cycle")
       reschedule()
       lastReschedule=getWorlds.head.getFullTime
     } else {

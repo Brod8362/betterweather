@@ -18,15 +18,15 @@ class BetterWeatherHandler(config: FileConfiguration, worlds: Seq[World]) extend
         case WeatherType.CLEAR =>
           world.setStorm(false)
           world.setClearWeatherDuration(len.toInt)
-          Bukkit.broadcastMessage(s"clear $len")
+//          Bukkit.broadcastMessage(s"clear $len")
         case WeatherType.RAIN =>
           world.setStorm(true)
           world.setWeatherDuration(len.toInt)
-          Bukkit.broadcastMessage(s"rain $len")
+//          Bukkit.broadcastMessage(s"rain $len")
         case WeatherType.THUNDER =>
           world.setThundering(true)
           world.setThunderDuration(len.toInt)
-          Bukkit.broadcastMessage(s"thunder $len")
+//          Bukkit.broadcastMessage(s"thunder $len")
       }
     }
   }
