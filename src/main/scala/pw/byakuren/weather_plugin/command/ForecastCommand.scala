@@ -6,22 +6,11 @@ import org.bukkit.entity.Player
 import org.bukkit.ChatColor
 import pw.byakuren.weather_plugin.WeatherGenerator
 import pw.byakuren.weather_plugin.types.WeatherType
-import pw.byakuren.weather_plugin.types.WeatherType.WeatherType
+import pw.byakuren.weather_plugin.types.WeatherType._
 
 class ForecastCommand(seed: Long) extends CommandExecutor {
 
-  val DESERT_BIOMES: Set[Biome] = Set(Biome.DESERT, Biome.DESERT_HILLS, Biome.DESERT_LAKES, Biome.SAVANNA, Biome.SAVANNA_PLATEAU,
-    Biome.SHATTERED_SAVANNA, Biome.SHATTERED_SAVANNA_PLATEAU, Biome.BADLANDS, Biome.BADLANDS_PLATEAU, Biome.ERODED_BADLANDS,
-    Biome.MODIFIED_BADLANDS_PLATEAU, Biome.MODIFIED_WOODED_BADLANDS_PLATEAU, Biome.WOODED_BADLANDS_PLATEAU)
 
-  val SNOWY_BIOMES: Set[Biome] = Set(Biome.SNOWY_TUNDRA, Biome.ICE_SPIKES, Biome.SNOWY_TAIGA, Biome.SNOWY_TAIGA_HILLS, Biome.FROZEN_RIVER,
-    Biome.SNOWY_BEACH, Biome.SNOWY_TAIGA_MOUNTAINS)
-
-  val CLOUD_EMOJI = "☁"
-  val SUN_EMOJI = "☀"
-  val RAIN_EMOJI = "\uD83C\uDF27"
-  val SNOW_EMOJI = "❄"
-  val THUNDER_EMOJI = "⚡"
 
   override def onCommand(sender: CommandSender, command: Command, label: String, args: Array[String]): Boolean = {
     //NOTE - show "rain" or "snow" depending on the user's biome when they execute the command. in desert, show "cloudy"
@@ -49,10 +38,7 @@ class ForecastCommand(seed: Long) extends CommandExecutor {
           }
 
         val wt = WeatherGenerator.day(day, seed)
-
-        val gl = ChatColor.GOLD
-        val rst = ChatColor.RESET
-
+        val gl = ChatColor.GOLD; val rst = ChatColor.RESET //just here to make it a bit easier to read
         val msg = s"${gl}Day $rst$day$gl Weather Forecast" +
           s"\n${gl}Morning: $rst${weatherToString(wt.morning, biome)}" +
           s"\n${gl}Afternoon: $rst${weatherToString(wt.afternoon, biome)}" +
@@ -67,24 +53,11 @@ class ForecastCommand(seed: Long) extends CommandExecutor {
   }
 
   def weatherToString(weather: WeatherType, biome: Biome): String = {
-    weather match {
-      case WeatherType.CLEAR =>
-        s"$SUN_EMOJI Sunny"
-      case WeatherType.RAIN =>
-        if (DESERT_BIOMES.contains(biome)) {
-          s"$CLOUD_EMOJI Overcast"
-        } else if (SNOWY_BIOMES.contains(biome)) {
-          s"$SNOW_EMOJI Snowy"
-        } else {
-          s"$RAIN_EMOJI Rain"
-        }
-      case WeatherType.THUNDER =>
-        s"$THUNDER_EMOJI Thunderstorm"
-    }
+    WeatherType.toWeatherString(weather,biome)
   }
 
   def shortWeatherString(weather: WeatherType, biome: Biome): String = {
-    weatherToString(weather, biome).head.toString
+    WeatherType.toEmoji(weather,biome)
   }
 
   def dayPreview(day: Long, b: Biome): String = {
