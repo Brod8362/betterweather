@@ -23,7 +23,6 @@ class WeatherPlugin extends JavaPlugin with Listener {
   override def onEnable(): Unit = {
     Bukkit.broadcastMessage("BetterWeather loaded")
     weatherPluginControl(true)
-    reschedule()
 
     // register commands
     this.getCommand("forecast").setExecutor(new ForecastCommand(config))
@@ -34,6 +33,7 @@ class WeatherPlugin extends JavaPlugin with Listener {
 
     //register timeskip detection
     getServer.getPluginManager.registerEvents(this, this)
+    reschedule()
   }
 
   override def onDisable(): Unit = {
