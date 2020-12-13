@@ -9,7 +9,7 @@ class ReseedCommand(config: FileConfiguration) extends CommandExecutor{
   override def onCommand(sender: CommandSender, command: Command, label: String, args: Array[String]): Boolean = {
     args.headOption match {
       case Some("confirm") =>
-        val ns = Math.random*Long.MaxValue
+        val ns = (Math.random*Long.MaxValue).toLong
         config.set("seed", ns)
         sender.sendMessage(s"${ChatColor.GREEN}New weather seed is $ns.")
         WeatherGenerator.clearCache

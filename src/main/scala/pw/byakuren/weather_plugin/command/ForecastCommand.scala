@@ -43,7 +43,8 @@ class ForecastCommand(config: FileConfiguration) extends CommandExecutor {
           s"\n${gl}Morning: $rst${weatherToString(wt.morning, biome)}" +
           s"\n${gl}Afternoon: $rst${weatherToString(wt.afternoon, biome)}" +
           s"\n${gl}Evening: $rst${weatherToString(wt.evening, biome)}" +
-          s"\n${gl}Late Night: $rst${weatherToString(wt.after_midnight, biome)}"
+          s"\n${gl}Late Night: $rst${weatherToString(wt.after_midnight, biome)}" +
+          s"\n${ChatColor.UNDERLINE}Tomorrow${ChatColor.RESET}\n${dayPreview(day+1, biome)}"
         sender.sendMessage(msg)
         true
       }
@@ -68,6 +69,6 @@ class ForecastCommand(config: FileConfiguration) extends CommandExecutor {
   }
 
   def weekPreview(day: Long, biome: Biome): String = {
-    (day to day+7).map(dayPreview(_, biome)).mkString(s"${ChatColor.UNDERLINE}Week Preview${ChatColor.RESET}\n", "\n", "")
+    (day to day+5).map(dayPreview(_, biome)).mkString(s"${ChatColor.UNDERLINE}Week Preview${ChatColor.RESET}\n", "\n", "")
   }
 }

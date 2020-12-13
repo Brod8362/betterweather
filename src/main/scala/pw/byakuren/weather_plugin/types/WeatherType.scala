@@ -38,6 +38,19 @@ object WeatherType extends Enumeration {
   }
 
   implicit def toEmoji(t: Value, b: Biome): String = {
-    toWeatherString(t,b).head.toString
+    t match {
+      case WeatherType.CLEAR =>
+        SUN_EMOJI
+      case WeatherType.RAIN =>
+        if (DESERT_BIOMES.contains(b)) {
+          CLOUD_EMOJI
+        } else if (SNOWY_BIOMES.contains(b)) {
+          SNOW_EMOJI
+        } else {
+          RAIN_EMOJI
+        }
+      case WeatherType.THUNDER =>
+        THUNDER_EMOJI
+    }
   }
 }
