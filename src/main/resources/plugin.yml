@@ -1,0 +1,5 @@
+main: pw.byakuren.weather_plugin.WeatherPlugin
+name: BetterWeather
+version: 1.0.0
+description: Improves minecraft's weather system
+load: POSTWORLD
