@@ -7,11 +7,33 @@ load: POSTWORLD
 commands:
   forecast:
     description: Check the weather forecast
+    permission: betterweather.forecast
   weather_control:
     description: Enable or disable control of the weather in the configured worlds
+    permission: betterweater.weather_control
   weather_seed:
     description: Check the weather seed
+    permission: betterweather.weather_seed
   reseed:
     description: Pick a new random seed for the weather
+    permission: betterweather.reseed
   curworld:
     description: Prints the current world you are in, and whether or not it supports weather
+    permission: betterweather.curworld
+
+permissions:
+  betterweather.forecast:
+    default: true
+    description: Allows use of /forecast
+  betterweather.weather_control:
+    default: op
+    description: Allows toggling weather control
+  betterweather.weather_seed:
+    default: op
+    description: Allows viewing weather seed
+  betterweather.reseed:
+    default: op
+    description: Allows changing the weather seed
+  betterweather.curworld:
+    default: yes
+    description: Allows you to view the name of your current world
