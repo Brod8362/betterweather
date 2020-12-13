@@ -1,4 +1,4 @@
 seed: 91850195
 
 #List of worlds the plugin should apply to. Defaults to only the overworld. if the world is invalid, it will fail silently.
-worlds: ["overworld"]
+worlds: ["world"]

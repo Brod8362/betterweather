@@ -3,3 +3,15 @@ name: BetterWeather
 version: 1.0.0
 description: Improves minecraft's weather system
 load: POSTWORLD
+
+commands:
+  forecast:
+    description: Check the weather forecast
+  weather_control:
+    description: Enable or disable control of the weather in the configured worlds
+  weather_seed:
+    description: Check the weather seed
+  reseed:
+    description: Pick a new random seed for the weather
+  curworld:
+    description: Prints the current world you are in, and whether or not it supports weather
