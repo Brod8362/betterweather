@@ -3,25 +3,28 @@ package pw.byakuren.weather_plugin.command
 import org.bukkit.block.Biome
 import org.bukkit.command.{Command, CommandExecutor, CommandSender}
 import org.bukkit.entity.Player
-import org.bukkit.ChatColor
+import org.bukkit.{ChatColor, World}
 import org.bukkit.configuration.file.FileConfiguration
 import pw.byakuren.weather_plugin.WeatherGenerator
 import pw.byakuren.weather_plugin.types.WeatherType
 import pw.byakuren.weather_plugin.types.WeatherType._
 
-class ForecastCommand(config: FileConfiguration) extends CommandExecutor {
+class ForecastCommand(config: FileConfiguration, worlds: () => Seq[World]) extends CommandExecutor {
 
   override def onCommand(sender: CommandSender, command: Command, label: String, args: Array[String]): Boolean = {
     //NOTE - show "rain" or "snow" depending on the user's biome when they execute the command. in desert, show "cloudy"
     val seed = config.getLong("seed")
     sender match {
       case p: Player => {
+        if (!worlds().contains(p.getWorld)) {
+          sender.sendMessage(s"${ChatColor.GOLD}There is no weather in this world!")
+          return true
+        }
         val pos = p.getLocation
         val x = pos.getBlockX
         val y = pos.getBlockY
         val z = pos.getBlockZ
         val biome = p.getWorld.getBiome(x, y, z)
-
         val day: Long =
           args.headOption match {
             case Some("week") =>

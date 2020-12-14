@@ -26,12 +26,12 @@ class WeatherPlugin extends JavaPlugin with Listener {
 //    Bukkit.broadcastMessage("BetterWeather loaded")
     weatherPluginControl(true)
     // register commands
-    this.getCommand("forecast").setExecutor(new ForecastCommand(config))
+    this.getCommand("forecast").setExecutor(new ForecastCommand(config, { () => getWorlds}))
     this.getCommand("weather_seed").setExecutor(new WeatherSeedCommand(config))
     this.getCommand("weather_control").setExecutor(new WeatherToggleCommand(weatherPluginControl))
     this.getCommand("curworld").setExecutor(new CurrentWorldCommand)
     this.getCommand("reseed").setExecutor(new ReseedCommand(config))
-    this.getCommand("nextphase").setExecutor(new NextPhaseCommand)
+    this.getCommand("nextphase").setExecutor(new NextPhaseCommand({() => reschedule() }))
 
     //register timeskip detection
     getServer.getPluginManager.registerEvents(this, this)
@@ -63,10 +63,10 @@ class WeatherPlugin extends JavaPlugin with Listener {
       this.getLogger.info(s"Canceling old task with id $taskId")
       Bukkit.getScheduler.cancelTask(taskId)
     }
+    wHandler.run()
     val delay = 6000-(getWorlds.head.getTime%6000)
     taskId = Bukkit.getScheduler.scheduleSyncRepeatingTask(this, wHandler, delay+20, 6010)
     this.getLogger.info(s"Rescheduling weather cycle with delay $delay and id $taskId")
-    wHandler.run()
   }
 
 
