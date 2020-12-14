@@ -58,7 +58,6 @@ class WeatherPlugin extends JavaPlugin with Listener {
   }
 
   def reschedule(): Unit = {
-    wHandler.run()
     if (taskId != -1) {
       this.getLogger.info(s"Canceling old task with id $taskId")
       Bukkit.getScheduler.cancelTask(taskId)
@@ -66,6 +65,7 @@ class WeatherPlugin extends JavaPlugin with Listener {
     val delay = 6000-(getWorlds.head.getTime%6000)
     taskId = Bukkit.getScheduler.scheduleSyncRepeatingTask(this, wHandler, delay+20, 6010)
     this.getLogger.info(s"Rescheduling weather cycle with delay $delay and id $taskId")
+    wHandler.run()
   }
 
 
