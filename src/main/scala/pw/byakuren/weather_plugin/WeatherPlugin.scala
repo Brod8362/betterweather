@@ -2,6 +2,7 @@ package pw.byakuren.weather_plugin
 
 import jdk.jfr.internal.LogLevel
 import org.bukkit.configuration.file.FileConfiguration
+import org.bukkit.event.player.PlayerBedLeaveEvent
 import org.bukkit.event.world.TimeSkipEvent
 import org.bukkit.event.{EventHandler, Listener}
 import org.bukkit.{Bukkit, GameRule, World}
@@ -68,10 +69,14 @@ class WeatherPlugin extends JavaPlugin with Listener {
   }
 
 
+  /*
+  This method effectively catches sleeping. However, it will also catch time set commands.
+  Ratelimiting is implemented as for some reason, the event is usually sent several times.
+   */
   @EventHandler
   def timeSkipEvent(tsE: TimeSkipEvent): Unit = {
+
     if (getWorlds.head.getFullTime-lastReschedule>120) {
-//      Bukkit.broadcastMessage("timeskip, adjusting weather cycle")
       this.getLogger.info("Timeskip detected, re-scheduling weather cycle")
       reschedule()
       lastReschedule=getWorlds.head.getFullTime

@@ -39,7 +39,10 @@ class ForecastCommand(config: FileConfiguration) extends CommandExecutor {
 
         val wt = WeatherGenerator.day(day, seed)
         val gl = ChatColor.GOLD; val rst = ChatColor.RESET //just here to make it a bit easier to read
-        val msg = s"${gl}Day $rst$day$gl Weather Forecast" +
+        val phase = (p.getWorld.getTime/6000).toInt
+        val curtime = Seq("Morning", "Afternoon", "Evening", "Late Night")(phase)
+        val curwt = WeatherType.toEmoji(wt.asSeq(phase), biome)
+        val msg = s"${gl}Day $rst$day$gl Weather Forecast $rst($curtime, $curwt)" +
           s"\n${gl}Morning: $rst${weatherToString(wt.morning, biome)}" +
           s"\n${gl}Afternoon: $rst${weatherToString(wt.afternoon, biome)}" +
           s"\n${gl}Evening: $rst${weatherToString(wt.evening, biome)}" +
