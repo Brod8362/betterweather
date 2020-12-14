@@ -1,5 +1,6 @@
 package pw.byakuren.weather_plugin
 
+import jdk.jfr.internal.LogLevel
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.event.world.TimeSkipEvent
 import org.bukkit.event.{EventHandler, Listener}
@@ -23,7 +24,6 @@ class WeatherPlugin extends JavaPlugin with Listener {
   override def onEnable(): Unit = {
 //    Bukkit.broadcastMessage("BetterWeather loaded")
     weatherPluginControl(true)
-
     // register commands
     this.getCommand("forecast").setExecutor(new ForecastCommand(config))
     this.getCommand("weather_seed").setExecutor(new WeatherSeedCommand(config))
@@ -59,20 +59,24 @@ class WeatherPlugin extends JavaPlugin with Listener {
   def reschedule(): Unit = {
     wHandler.run()
     if (taskId != -1) {
+      this.getLogger.info(s"Canceling old task with id $taskId")
       Bukkit.getScheduler.cancelTask(taskId)
     }
     val delay = 6000-(getWorlds.head.getTime%6000)
-    taskId = Bukkit.getScheduler.scheduleSyncRepeatingTask(this, wHandler, delay, 6002)
+    taskId = Bukkit.getScheduler.scheduleSyncRepeatingTask(this, wHandler, delay+20, 6010)
+    this.getLogger.info(s"Rescheduling weather cycle with delay $delay and id $taskId")
   }
 
 
   @EventHandler
   def timeSkipEvent(tsE: TimeSkipEvent): Unit = {
-    if (getWorlds.head.getFullTime-lastReschedule>20) {
+    if (getWorlds.head.getFullTime-lastReschedule>120) {
 //      Bukkit.broadcastMessage("timeskip, adjusting weather cycle")
+      this.getLogger.info("Timeskip detected, re-scheduling weather cycle")
       reschedule()
       lastReschedule=getWorlds.head.getFullTime
     } else {
+      this.getLogger.info("Ratelimit on timeskip, not rescheduling")
       //rate limiting
     }
   }

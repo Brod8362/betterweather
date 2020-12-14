@@ -1,5 +1,6 @@
 package pw.byakuren.weather_plugin.types
 
+import org.bukkit.ChatColor
 import org.bukkit.block.Biome
 
 object WeatherType extends Enumeration {
@@ -23,34 +24,34 @@ object WeatherType extends Enumeration {
   implicit def toWeatherString(t: Value, b: Biome): String = {
     t match {
       case WeatherType.CLEAR =>
-        s"$SUN_EMOJI Sunny"
+        s"${toEmoji(t,b)} Sunny"
       case WeatherType.RAIN =>
         if (DESERT_BIOMES.contains(b)) {
-          s"$CLOUD_EMOJI Overcast"
+          s"${toEmoji(t,b)} Overcast"
         } else if (SNOWY_BIOMES.contains(b)) {
-          s"$SNOW_EMOJI Snowy"
+          s"${toEmoji(t,b)} Snowy"
         } else {
-          s"$RAIN_EMOJI Rain"
+          s"${toEmoji(t,b)} Rain"
         }
       case WeatherType.THUNDER =>
-        s"$THUNDER_EMOJI Thunderstorm"
+        s"${toEmoji(t,b)} Thunderstorm"
     }
   }
 
   implicit def toEmoji(t: Value, b: Biome): String = {
     t match {
       case WeatherType.CLEAR =>
-        SUN_EMOJI
+        s"${ChatColor.GOLD}$SUN_EMOJI${ChatColor.RESET}"
       case WeatherType.RAIN =>
         if (DESERT_BIOMES.contains(b)) {
-          CLOUD_EMOJI
+          s"${ChatColor.GRAY}$CLOUD_EMOJI${ChatColor.RESET}"
         } else if (SNOWY_BIOMES.contains(b)) {
-          SNOW_EMOJI
+          s"${ChatColor.AQUA}$SNOW_EMOJI${ChatColor.RESET}"
         } else {
-          RAIN_EMOJI
+          s"${ChatColor.BLUE}$RAIN_EMOJI${ChatColor.RESET}"
         }
       case WeatherType.THUNDER =>
-        THUNDER_EMOJI
+        s"${ChatColor.RED}$THUNDER_EMOJI${ChatColor.RESET}"
     }
   }
 }
