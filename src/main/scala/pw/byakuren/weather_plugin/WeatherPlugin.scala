@@ -7,7 +7,7 @@ import org.bukkit.event.world.TimeSkipEvent
 import org.bukkit.event.{EventHandler, Listener}
 import org.bukkit.{Bukkit, GameRule, World}
 import org.bukkit.plugin.java.JavaPlugin
-import pw.byakuren.weather_plugin.command.{CurrentWorldCommand, ForecastCommand, ReseedCommand, WeatherSeedCommand, WeatherToggleCommand}
+import pw.byakuren.weather_plugin.command.{CurrentWorldCommand, ForecastCommand, NextPhaseCommand, ReseedCommand, WeatherSeedCommand, WeatherToggleCommand}
 
 import scala.collection.JavaConverters._
 
@@ -31,6 +31,7 @@ class WeatherPlugin extends JavaPlugin with Listener {
     this.getCommand("weather_control").setExecutor(new WeatherToggleCommand(weatherPluginControl))
     this.getCommand("curworld").setExecutor(new CurrentWorldCommand)
     this.getCommand("reseed").setExecutor(new ReseedCommand(config))
+    this.getCommand("nextphase").setExecutor(new NextPhaseCommand)
 
     //register timeskip detection
     getServer.getPluginManager.registerEvents(this, this)
@@ -76,7 +77,7 @@ class WeatherPlugin extends JavaPlugin with Listener {
   @EventHandler
   def timeSkipEvent(tsE: TimeSkipEvent): Unit = {
 
-    if (getWorlds.head.getFullTime-lastReschedule>120) {
+    if (getWorlds.head.getFullTime-lastReschedule>40) {
       this.getLogger.info("Timeskip detected, re-scheduling weather cycle")
       reschedule()
       lastReschedule=getWorlds.head.getFullTime

@@ -21,6 +21,9 @@ commands:
   curworld:
     description: Prints the current world you are in, and whether or not it supports weather
     permission: betterweather.curworld
+  nextphase:
+    description: Skip to the next weather phase
+    permission: betterweather.timeskip
 
 permissions:
   betterweather.forecast:
@@ -36,5 +39,8 @@ permissions:
     default: op
     description: Allows changing the weather seed
   betterweather.curworld:
-    default: yes
+    default: true
     description: Allows you to view the name of your current world
+  betterweather.timeskip:
+    default: op
+    description: Allows you to use timeskip commands

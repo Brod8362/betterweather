@@ -14,6 +14,7 @@ Command | Description |
 `/weather_control (on/off)` | Turn on or off the weather control. Turning it off will relinquish control to the world default.
 `/weather_seed` | View the weather seed
 `/curworld` | View the current world name. Useful for the config file.
+`/nextphase` | Skip to 5 seconds before the next weather phase. Intended as a debug command.
 
 ### Configuration (config.yml)
 Key | Expected Value | Description | Example | 
@@ -29,6 +30,7 @@ Command | Permission | Default |
 `/reseed` | `betterweather.reseed` | op only
 `/weather_control` | `betterweather.weather_control` | op only
 `/weather_seed` | `betterweather.weather_seed` | op only
+`/nextphase` | `betterweather.timeskip` | op only
 
 ### Default Config
 ```yaml
